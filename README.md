@@ -16,3 +16,12 @@ python manage.py startapp access_control
 python manage.py migrate
 python manage.py runserver
 ```
+
+Create admin login with
+```sh
+python manage.py createsuperuser
+```
+
+Keep it simple for demonstration purposes.
+USER: rismael
+PASS: password
