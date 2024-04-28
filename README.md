@@ -25,3 +25,5 @@ python manage.py createsuperuser
 Keep it simple for demonstration purposes.
 USER: rismael
 PASS: password
+
+For creating the html and css I used a lot of bootstrap templates.

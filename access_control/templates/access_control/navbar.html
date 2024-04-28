@@ -1,19 +1,43 @@
+{% load static%}
+<style>
+  .msg{
+    font-size: 18px;
+    color: #fff;
+    margin-right: 20px;
+  }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">SJSUL</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
+          <a class="nav-link" href="#">Rent Books</a>
+        </li>
+        {% if is_librarian or is_admin %}
+        <li class="nav-item">
+          <a class="nav-link" href="#">Checkout Books</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
+          <a class="nav-link" href="#">Add Books</a>
         </li>
+        {% endif %}
+        {% if is_admin %}
+        <li class="nav-item">
+          <a class="nav-link" href="#">Generate Reports</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Add Librarian</a>
+        </li>
+        {% endif %}
       </ul>
     </div>
+    <span class="msg">{{request.user}}</span>
+    <span class="msg"><a href="{% url 'logout' %}">Logout</a></span>
   </nav>
