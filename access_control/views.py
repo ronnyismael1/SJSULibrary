@@ -82,16 +82,23 @@ def reports(request):
 @admin_only
 def addLibrarian(request):
     if request.method == 'POST':
-        student_id = request.POST.get('student_id')
-        student = User.objects.get(id=student_id)
-        # Remove from 'student' group
-        student_group = Group.objects.get(name='student')
-        student.groups.remove(student_group)
-        # Add to 'librarian' group
-        librarian_group = Group.objects.get(name='librarian')
-        student.groups.add(librarian_group)
-        messages.success(request, f'{student.username} has been promoted to librarian.')
+        # Check which form is submitted
+        if 'student_id' in request.POST:
+            user_id = request.POST.get('student_id')
+            from_group = Group.objects.get(name='student')
+            to_group = Group.objects.get(name='librarian')
+        elif 'librarian_id' in request.POST:
+            user_id = request.POST.get('librarian_id')
+            from_group = Group.objects.get(name='librarian')
+            to_group = Group.objects.get(name='student')
+
+        user = User.objects.get(id=user_id)
+        user.groups.remove(from_group)
+        user.groups.add(to_group)
+        messages.success(request, f'{user.username} has been changed to {to_group.name}.')
         return redirect('addLibrarian')
     else:
         students = User.objects.filter(groups__name='student')
-        return render(request, 'access_control/addLibrarian.html', {'students': students})
+        librarians = User.objects.filter(groups__name='librarian')
+        return render(request, 'access_control/addLibrarian.html', {'students': students, 'librarians': librarians})
+

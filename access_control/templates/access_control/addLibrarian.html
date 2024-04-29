@@ -1,9 +1,7 @@
 {% extends 'access_control/main.html' %}
 
 {% block content %}
-
-<p class="centered-bold-large">Add new librarians here!</p>
-
+<h2>Promote a Student to Librarian</h2>
 <form method="post">
     {% csrf_token %}
     <select name="student_id">
@@ -14,4 +12,15 @@
     <button type="submit">Promote to Librarian</button>
 </form>
 
+<h2>Demote a Librarian to Student</h2>
+<form method="post">
+    {% csrf_token %}
+    <select name="librarian_id">
+        {% for user in librarians %}
+        <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Demote to Student</button>
+</form>
 {% endblock %}
+
