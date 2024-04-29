@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -80,4 +81,17 @@ def reports(request):
 @login_required(login_url='login')
 @admin_only
 def addLibrarian(request):
-    return render(request, 'access_control/addLibrarian.html')
+    if request.method == 'POST':
+        student_id = request.POST.get('student_id')
+        student = User.objects.get(id=student_id)
+        # Remove from 'student' group
+        student_group = Group.objects.get(name='student')
+        student.groups.remove(student_group)
+        # Add to 'librarian' group
+        librarian_group = Group.objects.get(name='librarian')
+        student.groups.add(librarian_group)
+        messages.success(request, f'{student.username} has been promoted to librarian.')
+        return redirect('addLibrarian')
+    else:
+        students = User.objects.filter(groups__name='student')
+        return render(request, 'access_control/addLibrarian.html', {'students': students})
