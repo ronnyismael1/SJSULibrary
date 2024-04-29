@@ -1,3 +1,4 @@
+# Setup
 Creted virtual environment with:
 ```sh
 python -m venv venv
@@ -14,7 +15,6 @@ pip install django
 django-admin startproject sjsul_library .
 python manage.py startapp access_control
 python manage.py migrate
-python manage.py runserver
 ```
 
 Create admin login with
@@ -22,8 +22,18 @@ Create admin login with
 python manage.py createsuperuser
 ```
 
+# Login
 Keep it simple for demonstration purposes.
 USER: admin
 PASS: password
 
-For creating the html and css I used a lot of bootstrap templates.
+# Exploring the Project
+Launch the website with
+```sh
+python manage.py runserver
+```
+
+Login with the admin credentials and feel free to explore!
+
+Admin panel will be
+<http://127.0.0.1:8000/admin>
