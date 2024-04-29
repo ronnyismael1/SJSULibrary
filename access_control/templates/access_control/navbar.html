@@ -15,25 +15,27 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only">(current)</span></a>
         </li>
+        {% if is_student or is_librarian or is_admin %}
         <li class="nav-item">
-          <a class="nav-link" href="#">Rent Books</a>
+          <a class="nav-link" href="{% url 'books' %}">Rent Books</a>
         </li>
+        {% endif %}
         {% if is_librarian or is_admin %}
         <li class="nav-item">
-          <a class="nav-link" href="#">Checkout Books</a>
+          <a class="nav-link" href="{% url 'checkout' %}">Checkout Books</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Add Books</a>
+          <a class="nav-link" href="{% url 'addNew' %}">Add Books</a>
         </li>
         {% endif %}
         {% if is_admin %}
         <li class="nav-item">
-          <a class="nav-link" href="#">Generate Reports</a>
+          <a class="nav-link" href="{% url 'reports' %}">Generate Reports</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Add Librarian</a>
+          <a class="nav-link" href="{% url 'addLibrarian' %}">Add Librarian</a>
         </li>
         {% endif %}
       </ul>

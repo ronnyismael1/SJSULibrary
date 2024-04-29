@@ -12,7 +12,6 @@ def unauthenticated_user(view_func):
 def allowed_users(allowed_roles=[]):
     def decorator(view_func):
         def wrapper_func(request, *args, **kwargs):
-            
             group = None
             if request.user.groups.exists():
                 group = request.user.groups.all()[0].name
@@ -22,6 +21,17 @@ def allowed_users(allowed_roles=[]):
                 return HttpResponse('Unauthorized user.')        
         return wrapper_func
     return decorator
+
+def librarians_only(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        group = None
+        if request.user.groups.exists():
+            group = request.user.groups.all()[0].name
+        if group == 'student':
+            return redirect('home')
+        if group == 'librarian' or group == 'admin':
+            return view_func(request, *args, **kwargs)
+    return wrapper_func
 
 def admin_only(view_func):
     def wrapper_func(request, *args, **kwargs):
@@ -33,4 +43,3 @@ def admin_only(view_func):
         if group == 'admin':
             return view_func(request, *args, **kwargs)
     return wrapper_func
-
